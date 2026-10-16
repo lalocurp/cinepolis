@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinépolis - Cartelera Básica</title>
+<style>
+    /* RESET Y TIPOGRAFÍA GENERAL */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* FONDO GENERAL */
+    body {
+        background-color: #f1f5f9;
+        color: #0f172a;
+        line-height: 1.6;
+    }
+
+    /* BARRA DE NAVEGACIÓN: Azul Marino con detalle Cyan */
+    nav {
+        background-color: #0b192c;
+        border-bottom: 4px solid #00a8e8;
+        padding: 14px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+        color: #ffffff;
+        font-size: 26px;
+        font-weight: 800;
+        font-style: italic;
+        text-decoration: none;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 10px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        color: #f8fafc;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 8px 14px;
+        border-radius: 6px;
+        transition: all 0.25s ease;
+    }
+
+    .nav-links a:hover {
+        background-color: #00a8e8;
+        color: #ffffff;
+    }
+
+    /* ENCABEZADO / HEADER */
+    header {
+        background: linear-gradient(135deg, #071220 0%, #0b192c 100%);
+        color: #ffffff;
+        text-align: center;
+        padding: 45px 20px;
+        border-bottom: 3px solid #00a8e8;
+    }
+
+    header h1 {
+        color: #ffffff;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    header p {
+        font-size: 16px;
+        color: #94a3b8;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+        max-width: 1050px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+
+    /* SECCIONES DEL CUERPO */
+    .section-title {
+        color: #0b192c;
+        border-left: 5px solid #00a8e8;
+        padding-left: 12px;
+        font-size: 22px;
+        font-weight: 700;
+        margin-top: 25px;
+        margin-bottom: 20px;
+    }
+
+    /* GRID PARA CARTELERA Y ESTRENOS */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 22px;
+    }
+
+    /* TARJETAS DE PELÍCULAS */
+    .card {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+        text-align: center;
+        padding: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(11, 25, 44, 0.12);
+    }
+
+    /* CONTENEDOR DE IMAGEN / PÓSTER */
+    .poster-placeholder {
+        width: 100%;
+        height: 250px;
+        background-color: #0b192c;
+        color: #00a8e8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 8px;
+        margin-bottom: 14px;
+        overflow: hidden;
+    }
+
+    .poster-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .card h3 {
+        font-size: 17px;
+        font-weight: 700;
+        color: #0b192c;
+        margin-bottom: 6px;
+    }
+
+    .card p {
+        font-size: 13px;
+        color: #64748b;
+        margin-bottom: 6px;
+    }
+
+    /* HORARIOS */
+    .horarios {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+    }
+
+    .horario-btn {
+        background-color: #e0f2fe;
+        color: #0369a1;
+        border: 1px solid #bae6fd;
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .horario-btn:hover {
+        background-color: #00a8e8;
+        color: #ffffff;
+        border-color: #00a8e8;
+        transform: scale(1.05);
+    }
+
+    /* FORMULARIOS (CLUB Y LOGIN) */
+    .box-container {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-top: 4px solid #0b192c;
+        border-radius: 10px;
+        padding: 24px;
+        margin-top: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 14px;
+        color: #0b192c;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: #f8fafc;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #00a8e8;
+        box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.15);
+        background-color: #ffffff;
+    }
+
+    /* BOTÓN PRINCIPAL */
+    .btn-primary {
+        background-color: #00a8e8;
+        color: #ffffff;
+        font-weight: 700;
+        border: none;
+        padding: 12px 20px;
+        font-size: 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(0, 168, 232, 0.3);
+    }
+
+    .btn-primary:hover {
+        background-color: #0086ba;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0, 134, 186, 0.4);
+    }
+
+    .mensaje {
+        margin-top: 14px;
+        padding: 12px 16px;
+        background-color: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        display: none;
+    }
+
+    /* FOOTER */
+    footer {
+        background-color: #071220;
+        color: #f8fafc;
+        border-top: 4px solid #00a8e8;
+        text-align: center;
+        padding: 24px;
+        margin-top: 60px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    /* ADAPTABILIDAD MÓVIL */
+    @media (max-width: 600px) {
+        nav {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-links {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- 1. BARRA DE NAVEGACIÓN -->
+    <nav>
+        <a href="#" class="logo">Cinépolis</a>
+        <ul class="nav-links">
+            <li><a href="#cartelera">Cartelera</a></li>
+            <li><a href="#estrenos">Estrenos</a></li>
+            <li><a href="#club">Club Cinépolis</a></li>
+            <li><a href="#login">Login / Registro</a></li>
+        </ul>
+    </nav>
+
+    <!-- 2. ENCABEZADO -->
+    <header>
+        <h1>Bienvenido a Cinépolis</h1>
+        <p>Consulta la cartelera, próximos estrenos e ingresa con tu tarjeta Club Cinépolis.</p>
+    </header>
+
+    <!-- 3. CUERPO DE LA PÁGINA (4 SECCIONES) -->
+    <div class="container">
+
+        <!-- SECCIÓN 1: EN CARTELERA -->
+        <section id="cartelera">
+            <h2 class="section-title">En Cartelera</h2>
+            <div class="grid">
+                
+                <!-- Película 1 -->
+                <div class="card">
+                    <div class="poster-placeholder"><strong><img src="your.png"></strong></div>
+                    <h3>your name</h3>
+                    <p>Clasificación: B15</p>
+                    <p>Horarios:</p>
+                    <div class="horarios">
+                        <button class="horario-btn">14:00</button>
+                        <button class="horario-btn">17:30</button>
+                        <button class="horario-btn">20:45</button>
+                    </div>
+                </div>
+
+                <!-- Película 2 -->
+                <div class="card">
+                    <div class="poster-placeholder"><strong><img src="resident.png"></strong></div>
+                    <h3>Resident evil</h3>
+                    <p>Clasificación: A</p>
+                    <p>Horarios:</p>
+                    <div class="horarios">
+                        <button class="horario-btn">13:00</button>
+                        <button class="horario-btn">15:15</button>
+                        <button class="horario-btn">18:00</button>
+                    </div>
+                </div>
+
+                <!-- Película 3 -->
+                <div class="card">
+                    <div class="poster-placeholder"><strong><img src="Godzilla.png"></strong></div>
+                    <h3>Godzilla minus zero</h3>
+                    <p>Clasificación: B</p>
+                    <p>Horarios:</p>
+                    <div class="horarios">
+                        <button class="horario-btn">16:20</button>
+                        <button class="horario-btn">19:00</button>
+                        <button class="horario-btn">21:30</button>
+                    </div>
+                </div>
+
+                <!-- Película 4 -->
+                <div class="card">
+                    <div class="poster-placeholder"><strong><img src="coyote.png"></strong></div>
+                    <h3>Coyote vs Acme</h3>
+                    <p>Clasificación: B15</p>
+                    <p>Horarios:</p>
+                    <div class="horarios">
+                        <button class="horario-btn">15:00</button>
+                        <button class="horario-btn">19:15</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: PRÓXIMOS ESTRENOS -->
+        <section id="estrenos">
+            <h2 class="section-title">Próximos Estrenos</h2>
+            <div class="grid">
+                
+                <!-- Estreno 1 -->
+                <div class="card">
+                    <div class="poster-placeholder"><strong><img src="dune.png"></strong></div>
+                    <h3>Dune three part</h3>
+                    <p><strong>Estreno:</strong> 12 de Julio</p>
+                </div>
+
+                <!-- Estreno 2 -->
+                <div class="card">
+                    <div class="poster-placeholder"><strong><img src="Domsday.png"></strong></div>
+                    <h3>Avenger Doomsday</h3>
+                    <p><strong>Estreno:</strong> 26 de Julio</p>
+                </div>
+
+                <!-- Estreno 3 -->
+                <div class="card">
+                    <div class="poster-placeholder"><strong><img src="laberinto.png"></strong></div>
+                    <h3>Laberinto del fauno</h3>
+                    <p><strong>Estreno:</strong> 04 de Octubre</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: TARJETA CINÉPOLIS CLUB -->
+        <section id="club">
+            <h2 class="section-title">Tarjeta Cinépolis Club</h2>
+            <div class="box-container">
+                <p style="margin-bottom: 10px; font-size: 14px;">Ingresa tu número de tarjeta para consultar o guardar tus puntos:</p>
+                
+                <div class="form-group">
+                    <label for="numTarjeta">Número de Tarjeta Club (10 a 16 dígitos):</label>
+                    <input type="text" id="numTarjeta" placeholder="Ej. 1234567890" maxlength="16">
+                </div>
+
+                <button class="btn-yellow" onclick="consultarTarjeta()">Consultar / Guardar Tarjeta</button>
+
+                <div id="msgTarjeta" class="mensaje"></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: INICIO / REGISTRO -->
+        <section id="login">
+            <h2 class="section-title">Inicio / Registro</h2>
+            <div class="box-container">
+                <form onsubmit="hacerLogin(event)">
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico:</label>
+                        <input type="email" id="correo" placeholder="correo@ejemplo.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn-yellow">Iniciar Sesión</button>
+                        <button type="button" class="btn-yellow" style="background-color: #002B49; color: #FFCC00; border: 1px solid #FFCC00;" onclick="hacerRegistro()">Registrarse</button>
+                    </div>
+                </form>
+
+                <div id="msgLogin" class="mensaje"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 4. FOOTER -->
+    <footer>
+        Jesus Eduardo Candia Arenivas - Número de control: 0814
+    </footer>
+
+    <!-- JAVASCRIPT BÁSICO DE INTERACCIÓN -->
+    <script>
+        // Función para consultar/guardar tarjeta Club Cinépolis
+        function consultarTarjeta() {
+            var num = document.getElementById('numTarjeta').value.trim();
+            var msg = document.getElementById('msgTarjeta');
+
+            if (num.length >= 10 && !isNaN(num)) {
+                msg.style.display = 'block';
+                msg.innerHTML = '<strong>¡Tarjeta Aceptada!</strong><br>Número: ' + num + '<br>Puntos acumulados: 150 pts.';
+            } else {
+                msg.style.display = 'block';
+                msg.innerHTML = '<span style="color: red;">Por favor ingresa un número de tarjeta válido (mínimo 10 números).</span>';
+            }
+        }
+
+        // Función para simular inicio de sesión
+        function hacerLogin(e) {
+            e.preventDefault();
+            var correo = document.getElementById('correo').value;
+            var msg = document.getElementById('msgLogin');
+
+            msg.style.display = 'block';
+            msg.innerHTML = '<strong>¡Bienvenido!</strong> Sesión iniciada correctamente con: ' + correo;
+        }
+
+        // Función para simular registro
+        function hacerRegistro() {
+            var correo = document.getElementById('correo').value;
+            var msg = document.getElementById('msgLogin');
+
+            if (correo === '') {
+                msg.style.display = 'block';
+                msg.innerHTML = '<span style="color: red;">Ingresa un correo electrónico para registrarte.</span>';
+            } else {
+                msg.style.display = 'block';
+                msg.innerHTML = '<strong>¡Registro Exitoso!</strong> Cuenta creada para: ' + correo;
+            }
+        }
+    </script>
+</body>
+</html>
